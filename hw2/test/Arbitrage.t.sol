@@ -83,11 +83,11 @@ contract Arbitrage is Test {
         pathBA[0] = address(tokenB);
         pathBA[1] = address(tokenA);
         router.swapExactTokensForTokens(
-            5 ether, // amountIn
-            0,       // amountOutMin, set to 0 for the example, adjust based on slippage tolerance
-            pathBA,  // path
-            arbitrager, // to
-            block.timestamp + 120 // deadline
+            5 ether, 
+            0,       
+            pathBA,  
+            arbitrager, 
+            block.timestamp + 120 
         );
 
         // Approve tokenA to router for the next swap A -> D
@@ -98,7 +98,7 @@ contract Arbitrage is Test {
         pathAD[1] = address(tokenD);
         router.swapExactTokensForTokens(
             tokenABalance, 
-            0, // amountOutMin
+            0, 
             pathAD, 
             arbitrager, 
             block.timestamp + 120
@@ -112,7 +112,7 @@ contract Arbitrage is Test {
         pathDC[1] = address(tokenC);
         router.swapExactTokensForTokens(
             tokenDBalance, 
-            0, // amountOutMin
+            0, 
             pathDC, 
             arbitrager, 
             block.timestamp + 120
@@ -126,7 +126,7 @@ contract Arbitrage is Test {
         pathCB[1] = address(tokenB);
         router.swapExactTokensForTokens(
             tokenCBalance, 
-            0, // amountOutMin
+            0, 
             pathCB, 
             arbitrager, 
             block.timestamp + 120
