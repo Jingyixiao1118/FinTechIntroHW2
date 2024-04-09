@@ -79,6 +79,58 @@ contract Arbitrage is Test {
         /**
          * Please add your solution below
          */
+        address[] memory pathBA = new address[](2);
+        pathBA[0] = address(tokenB);
+        pathBA[1] = address(tokenA);
+        router.swapExactTokensForTokens(
+            5 ether, // amountIn
+            0,       // amountOutMin, set to 0 for the example, adjust based on slippage tolerance
+            pathBA,  // path
+            arbitrager, // to
+            block.timestamp + 120 // deadline
+        );
+
+        // Approve tokenA to router for the next swap A -> D
+        uint256 tokenABalance = tokenA.balanceOf(arbitrager);
+        tokenA.approve(address(router), tokenABalance);
+        address[] memory pathAD = new address[](2);
+        pathAD[0] = address(tokenA);
+        pathAD[1] = address(tokenD);
+        router.swapExactTokensForTokens(
+            tokenABalance, 
+            0, // amountOutMin
+            pathAD, 
+            arbitrager, 
+            block.timestamp + 120
+        );
+
+        // Swap D -> C
+        uint256 tokenDBalance = tokenD.balanceOf(arbitrager);
+        tokenD.approve(address(router), tokenDBalance);
+        address[] memory pathDC = new address[](2);
+        pathDC[0] = address(tokenD);
+        pathDC[1] = address(tokenC);
+        router.swapExactTokensForTokens(
+            tokenDBalance, 
+            0, // amountOutMin
+            pathDC, 
+            arbitrager, 
+            block.timestamp + 120
+        );
+
+        // Swap C -> B
+        uint256 tokenCBalance = tokenC.balanceOf(arbitrager);
+        tokenC.approve(address(router), tokenCBalance);
+        address[] memory pathCB = new address[](2);
+        pathCB[0] = address(tokenC);
+        pathCB[1] = address(tokenB);
+        router.swapExactTokensForTokens(
+            tokenCBalance, 
+            0, // amountOutMin
+            pathCB, 
+            arbitrager, 
+            block.timestamp + 120
+        );
         /**
          * Please add your solution above
          */
